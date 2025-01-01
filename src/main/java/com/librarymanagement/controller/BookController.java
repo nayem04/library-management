@@ -1,12 +1,10 @@
 package com.librarymanagement.controller;
 
+import com.librarymanagement.exception.BookNotFoundException;
 import com.librarymanagement.exception.DuplicateBookException;
 import com.librarymanagement.service.LibraryService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/books")
@@ -28,6 +26,17 @@ public class BookController {
             return ResponseEntity.ok("Book added successfully.");
         } catch (DuplicateBookException duplicateBookException) {
             return ResponseEntity.badRequest().body(duplicateBookException.getMessage());
+        }
+    }
+
+    @DeleteMapping
+    public ResponseEntity<String> delete(@RequestParam(value = "id", required = false) Integer id,
+                                         @RequestParam(value = "title", required = false) String title) {
+        try {
+            libraryService.removeBook(id, title);
+            return ResponseEntity.ok("Book deleted successfully.");
+        } catch (BookNotFoundException bookNotFoundException) {
+            return ResponseEntity.badRequest().body(bookNotFoundException.getMessage());
         }
     }
 }
