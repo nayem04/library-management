@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class LibraryService {
@@ -68,5 +67,9 @@ public class LibraryService {
         }
 
         return searchedBooks;
+    }
+
+    public List<Book> getBooks() {
+        return books;
     }
 }

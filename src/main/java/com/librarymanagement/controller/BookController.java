@@ -2,9 +2,12 @@ package com.librarymanagement.controller;
 
 import com.librarymanagement.exception.BookNotFoundException;
 import com.librarymanagement.exception.DuplicateBookException;
+import com.librarymanagement.model.Book;
 import com.librarymanagement.service.LibraryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/books")
@@ -49,5 +52,10 @@ public class BookController {
         } catch (BookNotFoundException bookNotFoundException) {
             return ResponseEntity.badRequest().body(bookNotFoundException.getMessage());
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Book>> getAll() {
+        return ResponseEntity.ok(libraryService.getBooks());
     }
 }
