@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LibraryService {
@@ -49,5 +50,23 @@ public class LibraryService {
                         (title == null || b.getTitle().equals(title))
         );
 
+    }
+
+    public List<Book> searchBooks(String title, String author, Integer publicationYear) throws BookNotFoundException {
+        if (title == null && author == null && publicationYear == null) {
+            throw new BookNotFoundException("No input data found");
+        }
+
+        List<Book> searchedBooks = books.stream()
+                .filter(book -> (title == null || book.getTitle().equals(title)) &&
+                        (author == null || book.getAuthor().equals(author)) &&
+                        (publicationYear == null || book.getPublicationYear().equals(publicationYear)))
+                .toList();
+
+        if (searchedBooks.isEmpty()) {
+            throw new BookNotFoundException("No books found");
+        }
+
+        return searchedBooks;
     }
 }
