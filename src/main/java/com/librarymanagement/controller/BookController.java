@@ -29,13 +29,9 @@ public class BookController {
 
     @DeleteMapping
     public ResponseEntity<String> delete(@RequestParam(value = "id", required = false) Integer id,
-                                         @RequestParam(value = "title", required = false) String title) {
-        try {
-            libraryService.removeBook(id, title);
-            return ResponseEntity.ok("Book deleted successfully.");
-        } catch (BookNotFoundException bookNotFoundException) {
-            return ResponseEntity.badRequest().body(bookNotFoundException.getMessage());
-        }
+                                         @RequestParam(value = "title", required = false) String title) throws BookNotFoundException {
+        libraryService.removeBook(id, title);
+        return ResponseEntity.ok("Book deleted successfully.");
     }
 
     @GetMapping("/search")
