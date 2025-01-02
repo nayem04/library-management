@@ -35,14 +35,10 @@ public class BookController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Object> search(@RequestParam(value = "title", required = false) String title,
+    public ResponseEntity<List<Book>> search(@RequestParam(value = "title", required = false) String title,
                                          @RequestParam(value = "author", required = false) String author,
-                                         @RequestParam(value = "publication_year", required = false) Integer publicationYear) {
-        try {
-            return ResponseEntity.ok(libraryService.searchBooks(title, author, publicationYear));
-        } catch (BookNotFoundException bookNotFoundException) {
-            return ResponseEntity.badRequest().body(bookNotFoundException.getMessage());
-        }
+                                         @RequestParam(value = "publication_year", required = false) Integer publicationYear) throws BookNotFoundException {
+        return ResponseEntity.ok(libraryService.searchBooks(title, author, publicationYear));
     }
 
     @GetMapping
