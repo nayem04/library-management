@@ -36,8 +36,8 @@ public class BookController {
 
     @GetMapping("/search")
     public ResponseEntity<List<Book>> search(@RequestParam(value = "title", required = false) String title,
-                                         @RequestParam(value = "author", required = false) String author,
-                                         @RequestParam(value = "publication_year", required = false) Integer publicationYear) throws BookNotFoundException {
+                                             @RequestParam(value = "author", required = false) String author,
+                                             @RequestParam(value = "publication_year", required = false) Integer publicationYear) throws BookNotFoundException {
         return ResponseEntity.ok(libraryService.searchBooks(title, author, publicationYear));
     }
 
