@@ -19,17 +19,12 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<String> create(@RequestParam(value = "id") Integer id,
-                                         @RequestParam(value = "title") String title,
-                                         @RequestParam(value = "author") String author,
-                                         @RequestParam(value = "publication_year") Integer publicationYear,
-                                         @RequestParam(value = "genre") String genre) {
-        try {
-            libraryService.addBook(id, title, author, publicationYear, genre);
-            return ResponseEntity.ok("Book added successfully.");
-        } catch (DuplicateBookException duplicateBookException) {
-            return ResponseEntity.badRequest().body(duplicateBookException.getMessage());
-        }
+    public ResponseEntity<Book> create(@RequestParam(value = "id") Integer id,
+                                       @RequestParam(value = "title") String title,
+                                       @RequestParam(value = "author") String author,
+                                       @RequestParam(value = "publication_year") Integer publicationYear,
+                                       @RequestParam(value = "genre") String genre) throws DuplicateBookException {
+        return ResponseEntity.ok(libraryService.addBook(id, title, author, publicationYear, genre));
     }
 
     @DeleteMapping

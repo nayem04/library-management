@@ -18,12 +18,14 @@ public class LibraryService {
         this.bookFactory = bookFactory;
     }
 
-    public void addBook(Integer id, String title, String author, Integer publicationYear, String genre) throws DuplicateBookException {
+    public Book addBook(Integer id, String title, String author, Integer publicationYear, String genre) throws DuplicateBookException {
         if (books.stream().anyMatch(b -> b.getId().equals(id))) {
             throw new DuplicateBookException("Book with id " + id + " already exists");
         }
 
-        books.add(bookFactory.createBook(id, title, author, publicationYear, genre));
+        Book book = bookFactory.createBook(id, title, author, publicationYear, genre);
+        books.add(book);
+        return book;
     }
 
     public void removeBook(Integer id, String title) throws BookNotFoundException {
