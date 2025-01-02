@@ -18,6 +18,8 @@ public class LibraryService {
         this.bookFactory = bookFactory;
     }
 
+
+    ///  Problem is Invalid input is not handled like negative year or null & Empty values.
     public Book addBook(Integer id, String title, String author, Integer publicationYear, String genre) throws DuplicateBookException {
         if (books.stream().anyMatch(b -> b.getId().equals(id))) {
             throw new DuplicateBookException("Book with id " + id + " already exists");
